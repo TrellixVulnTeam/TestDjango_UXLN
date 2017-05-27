@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% if obj %}
+<a href="{{ obj.get_absolute_path }}">Back</a>
+{% else %}
+<a href="{% url 'posts:list' %}">Back to list</a>
+{% endif %}
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{{ button }}">
+</form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load url_tags %}
+
+{% block title %}{{ obj.title }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'posts:list' %}">Back to list</a> |
+<a href="{% url 'posts:create' %}">Create new post</a>
+{% include 'inc-messages.html' %}
+
+<h1>{{ obj.title }}</h1>
+<div>
+    <small>Автор: {{ obj.user }}</small>
+</div>
+<div>
+    <small>Создано: <em>{{ obj.timestamp|date:"d M Y H:i" }}</em></small>
+</div>
+<div>
+    <small>Обновлено: <em>{{ obj.updated|date:"d M Y H:i" }}</em></small>
+</div>
+
+{% if obj.image %}
+<img src="{{ obj.image.url }}" alt="">
+{% endif %}
+
+<span>Content:</span>
+<pre>{{ obj.content }}</pre>
+
+<span>Urlify:</span>
+<pre>{{ obj.content|urlify }}</pre>
+
+<div>
+    <a href="{% url 'posts:edit' slug=obj.slug %}">Edit</a> |
+    <a href="{% url 'posts:delete' slug=obj.slug %}">Delete</a>
+</div>
+{% endblock %}

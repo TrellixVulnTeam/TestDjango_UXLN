@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Try Django 1.9</h1>
+{% include 'inc-messages.html' %}
+<a href="{% url 'posts:create' %}">Create new post</a>
+
+<form method="GET" action="">
+    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Text for search">
+    <input type="submit" value="Search">
+</form>
+
+{% if object_list %}
+<ul>
+    {% for obj in object_list %}
+    <li>
+        <a href="{{ obj.get_absolute_path }}">{{ obj.title }}</a> -
+        <em>{{ obj.timestamp|timesince }} назад</em>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div>
+    {% if object_list.has_previous %}
+    <a href="?{{ page_get_param }}={{ object_list.previous_page_number }}">Back</a>
+    {% endif %}
+
+    <span>
+        Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
+    </span>
+
+    {% if object_list.has_next %}
+    <a href="?{{ page_get_param }}={{ object_list.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+{% endblock %}
